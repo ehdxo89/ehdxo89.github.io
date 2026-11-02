@@ -18,7 +18,7 @@ const { Content, headings } = await render(post);
 <div class="wrap article-grid">
   <aside class="article-toc" aria-label="글 목차"><strong>이 글에서</strong><nav>{headings.filter(h => h.depth === 2).map(h => <a href={`#${h.slug}`}>{h.text}</a>)}</nav></aside>
   <article class="prose"><Content />
-    {post.data.project && <div class="related-project"><span class="eyebrow">RELATED PROJECT</span><h2>Slack × Codex</h2><p>운영 구조와 샘플 작업 흐름을 함께 살펴보세요.</p><a class="button" href={`/projects/${post.data.project}/`}>프로젝트와 웹 시연 보기 ↗</a></div>}
+    {post.data.project && <div class="related-project"><span class="eyebrow">RELATED PROJECT</span><h2>Slack × Codex</h2><p>운영 구조와 모의 시연.</p><a class="button" href={`/projects/${post.data.project}/`}>프로젝트·시연 보기 ↗</a></div>}
     <a class="back-link" href="/studies/">← 모든 스터디 글</a>
   </article>
 </div>
