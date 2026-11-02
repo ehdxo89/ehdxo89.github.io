@@ -6,7 +6,7 @@ const root=new URL('../dist/',import.meta.url).pathname;
 const walk=p=>readdirSync(p,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(join(p,e.name)):[join(p,e.name)]);
 const html=walk(root).filter(p=>p.endsWith('.html'));
 test('public routes and draft exclusion',()=>{
- for(const route of ['index.html','studies/index.html','projects/index.html','projects/slack-codex/index.html','studies/slack-codex-workflow/index.html','studies/static-site-and-api/index.html','rss.xml','404.html']) assert.ok(existsSync(join(root,route)),route);
+ for(const route of ['index.html','studies/index.html','projects/index.html','projects/slack-codex/index.html','studies/slack-codex-workflow/index.html','studies/static-site-and-api/index.html','studies/automation-before-schedule/index.html','studies/ui-request-to-checklist/index.html','rss.xml','404.html']) assert.ok(existsSync(join(root,route)),route);
  assert.ok(!existsSync(join(root,'studies/writing-template/index.html')));
  for(const file of walk(root)) if(/\.(html|xml)$/.test(file)) assert.ok(!readFileSync(file,'utf8').includes('DRAFT_EXAMPLE_NOT_PUBLISHED'),file);
 });
@@ -24,5 +24,5 @@ test('every local page link, asset and fragment resolves',()=>{
 });
 test('public metadata and RSS',()=>{
  for(const file of html){const text=readFileSync(file,'utf8'); assert.match(text,/<html lang="ko"/);assert.equal((text.match(/<h1[ >]/g)||[]).length,1);assert.match(text,/<meta name="description" content="[^"]+"/);assert.ok(!text.includes('/Users/'));}
- const rss=readFileSync(join(root,'rss.xml'),'utf8');assert.equal((rss.match(/<item>/g)||[]).length,2);assert.ok(!rss.includes('writing-template'));
+ const rss=readFileSync(join(root,'rss.xml'),'utf8');const routes=html.filter(p=>p.includes('/studies/')&&!p.endsWith('/studies/index.html'));assert.equal((rss.match(/<item>/g)||[]).length,routes.length);for(const route of routes) assert.ok(rss.includes('https://ehdxo89.github.io/'+route.slice(root.length).replace(/index\.html$/, '')),route);assert.ok(!rss.includes('writing-template'));
 });
