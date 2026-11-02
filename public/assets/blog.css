@@ -38,3 +38,20 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media (prefers-reduced-motion: reduce) {html {scroll-behavior:auto}*,*::before,*::after {transition:none!important}}
 
 .note-two .code-icon {background:transparent;border:1px solid currentColor}
+
+/* Desktop only: reserve the original space while the compact bar is fixed. */
+@media (min-width:1024px) and (hover:hover) and (pointer:fine) {
+  html {scroll-padding-top:88px}
+  .site-header-slot {height:100px}
+  .site-header-slot.is-compact .site-header-shell {
+    position:fixed;inset:0 0 auto;z-index:30;
+    background:var(--paper);border-bottom:1px solid var(--line);
+  }
+  .site-header-slot.is-compact .header {min-height:64px;height:64px;border-bottom:0}
+  .site-header-slot.is-compact .brand {font-size:16px}
+  .site-header-slot.is-compact .brand-mark {width:29px;height:29px;font-size:25px;border-radius:8px}
+  .site-header-slot.is-compact .brand-note {display:none}
+  .site-header-slot.is-compact nav a {padding-block:10px}
+  .article-toc {top:88px;max-height:calc(100vh - 112px);overflow-y:auto}
+  .skip {z-index:40}
+}

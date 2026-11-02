@@ -24,6 +24,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 </head>
 <body>
   <a class="skip" href="#main">본문으로 이동</a>
+  <div class="site-header-slot" id="site-header-slot"><div class="site-header-shell">
   <header class="header wrap">
     <a class="brand" href="/" aria-label="DEVLOG 홈"><span class="brand-mark" aria-hidden="true">d.</span> DEVLOG<span class="brand-note">개발 기록</span></a>
     <nav aria-label="주 메뉴">
@@ -32,6 +33,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <a class="github-nav" href="https://github.com/ehdxo89/ehdxo89.github.io" rel="noreferrer">GitHub ↗</a>
     </nav>
   </header>
+  </div></div>
+  <script>
+    const slot = document.querySelector<HTMLElement>('#site-header-slot')!;
+    const desktop = matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine)');
+    const updateHeader = () => slot.classList.toggle('is-compact', desktop.matches && window.scrollY > 80);
+    let scheduled = false;
+    window.addEventListener('scroll', () => {
+      if (scheduled) return;
+      scheduled = true;
+      requestAnimationFrame(() => { updateHeader(); scheduled = false; });
+    }, { passive: true });
+    desktop.addEventListener('change', updateHeader);
+    window.addEventListener('pageshow', updateHeader);
+    updateHeader();
+  </script>
   <main id="main"><slot /></main>
   <footer class="footer wrap">
     <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">d.</span> DEVLOG</a>
