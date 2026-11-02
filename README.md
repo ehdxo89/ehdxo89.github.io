@@ -41,3 +41,5 @@ npm run preview
 GitHub Pages 설정에서 Source를 GitHub Actions로 선택합니다. `.github/workflows/deploy.yml`이 빌드·검사를 통과한 정적 산출물만 게시합니다. main push는 공개 배포를 일으키므로 변경 범위를 검토한 뒤 수행합니다.
 
 서버가 필요한 기능은 추후 별도 HTTPS API로 연결합니다. 홈페이지 코드에 서버 비밀키를 넣지 않습니다.
+
+Styles: `src/styles/base.css` and `src/styles/site.css` are the active CSS sources. Astro fingerprints the generated assets. Old public CSS paths remain for compatibility and are not linked by current pages. Desktop layout starts at 761 CSS pixels; touch input does not disable the compact header or scroll progress.

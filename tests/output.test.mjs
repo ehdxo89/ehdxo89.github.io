@@ -31,3 +31,7 @@ test('monochrome icon and browser theme metadata on every page',()=>{
  for(const file of html){const text=readFileSync(file,'utf8');assert.match(text,/rel="icon" href="\/assets\/favicon-monochrome\.svg"/);assert.ok(!text.includes('href="/assets/favicon.svg"'));assert.match(text,/name="theme-color" content="#fafafa" media="\(prefers-color-scheme: light\)"/);assert.match(text,/name="theme-color" content="#141414" media="\(prefers-color-scheme: dark\)"/);}
  const svg=readFileSync(join(root,'assets/favicon-monochrome.svg'),'utf8');const colors=[...svg.matchAll(/#[0-9a-f]{6}/gi)].map(x=>x[0]);assert.ok(colors.length>=2);for(const c of colors)assert.ok(c.slice(1,3)===c.slice(3,5)&&c.slice(3,5)===c.slice(5,7),c);
 });
+
+test('active CSS uses fingerprinted build assets',()=>{
+ for(const file of html){const text=readFileSync(file,'utf8');assert.match(text,/href="\/_astro\/[^"]+\.css"/);assert.ok(!text.includes('href="/assets/style.css"'));assert.ok(!text.includes('href="/assets/blog.css"'));}
+});

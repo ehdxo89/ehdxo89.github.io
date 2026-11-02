@@ -1,4 +1,6 @@
 ---
+import "../styles/base.css";
+import "../styles/site.css";
 interface Props { title: string; description?: string; active?: string; }
 const { title, description = '스터디 기록, 웹 프로젝트 시연, 공개 소스.', active = '' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -19,8 +21,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <meta property="og:type" content="website" />
   <meta property="og:url" content={canonical} />
   <link rel="icon" href="/assets/favicon-monochrome.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="/assets/style.css" />
-  <link rel="stylesheet" href="/assets/blog.css" />
   <link rel="alternate" type="application/rss+xml" title="DEVLOG 스터디" href="/rss.xml" />
   <slot name="head" />
 </head>
@@ -39,7 +39,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   </div></div>
   <script>
     const slot = document.querySelector<HTMLElement>('#site-header-slot')!;
-    const desktop = matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine)');
+    const desktop = matchMedia('(min-width: 761px)');
     const progress = document.querySelector<HTMLElement>('#scroll-progress')!;
     const fill = progress.querySelector<HTMLElement>('span')!;
     const updateScrollUI = () => {
