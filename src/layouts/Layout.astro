@@ -25,7 +25,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <slot name="head" />
 </head>
 <body>
-  <div id="scroll-progress" class="scroll-progress" role="progressbar" aria-label="페이지 스크롤 위치" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span></span></div>
   <a class="skip" href="#main">본문으로 이동</a>
   <div class="site-header-slot" id="site-header-slot"><div class="site-header-shell">
   <header class="header wrap">
@@ -36,6 +35,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <a class="github-nav" href="https://github.com/ehdxo89/ehdxo89.github.io" rel="noreferrer">GitHub ↗</a>
     </nav>
   </header>
+  <div id="scroll-progress" class="scroll-progress" role="progressbar" aria-label="페이지 스크롤 위치" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span></span></div>
   </div></div>
   <script>
     const slot = document.querySelector<HTMLElement>('#site-header-slot')!;

@@ -43,6 +43,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media (min-width:761px) {
   html {scroll-padding-top:88px}
   .site-header-slot {height:100px}
+  .site-header-shell {position:relative}
   .site-header-slot.is-compact .site-header-shell {
     position:fixed;inset:0 0 auto;z-index:30;
     background:var(--paper);border-bottom:1px solid var(--line);
@@ -59,6 +60,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 /* Reading position shares the desktop scope of the compact header. */
 .scroll-progress {display:none}
 @media (min-width:761px) {
-  .scroll-progress {display:block;position:fixed;inset:0 0 auto;height:3px;z-index:35;background:var(--line);pointer-events:none}
+  .scroll-progress {display:block;position:absolute;inset:100% 0 auto;height:3px;z-index:35;background:var(--line);pointer-events:none}
   .scroll-progress span {display:block;width:100%;height:100%;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:none}
 }
