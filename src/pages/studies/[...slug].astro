@@ -1,0 +1,25 @@
+---
+import { render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { publishedPosts, dateLabel } from '../../lib/posts';
+export async function getStaticPaths() {
+  return (await publishedPosts()).map(post => ({ params: { slug: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+---
+<Layout title={post.data.title} description={post.data.description} active="studies">
+<header class="wrap article-header">
+  <a class="back-link" href="/studies/">← 스터디 목록</a>
+  <p class="eyebrow">STUDY NOTE / {post.data.tags.join(' · ')}</p>
+  <h1>{post.data.title}</h1><p class="intro">{post.data.description}</p>
+  <div class="article-meta"><time datetime={post.data.date.toISOString()}>{dateLabel(post.data.date)}</time><span>설계·구현 기록</span></div>
+</header>
+<div class="wrap article-grid">
+  <aside class="article-toc" aria-label="글 목차"><strong>이 글에서</strong><nav>{headings.filter(h => h.depth === 2).map(h => <a href={`#${h.slug}`}>{h.text}</a>)}</nav></aside>
+  <article class="prose"><Content />
+    {post.data.project && <div class="related-project"><span class="eyebrow">RELATED PROJECT</span><h2>Slack × Codex</h2><p>운영 구조와 샘플 작업 흐름을 함께 살펴보세요.</p><a class="button" href={`/projects/${post.data.project}/`}>프로젝트와 웹 시연 보기 ↗</a></div>}
+    <a class="back-link" href="/studies/">← 모든 스터디 글</a>
+  </article>
+</div>
+</Layout>

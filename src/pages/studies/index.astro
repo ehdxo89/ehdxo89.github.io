@@ -1,0 +1,40 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PostList from '../../components/PostList.astro';
+import { publishedPosts } from '../../lib/posts';
+const posts = await publishedPosts();
+const tags = [...new Set(posts.flatMap(post => post.data.tags))];
+---
+<Layout title="스터디" description="개발하며 배운 원리와 선택의 이유를 기록합니다. 글에서 프로젝트와 웹 시연으로 이어집니다." active="studies">
+<section class="wrap listing-hero"><p class="eyebrow">STUDY NOTES / {String(posts.length).padStart(2, '0')}</p><h1>배운 것을,<br /><em>나의 언어로.</em></h1><p class="intro">구현하며 만난 문제와 선택의 이유를 정리합니다.<br />글에서 코드로, 코드에서 작동하는 경험으로.</p></section>
+<section class="wrap section study-index">
+  <div class="study-controls" id="study-controls" hidden>
+    <label for="study-search">글 검색<input id="study-search" type="search" placeholder="제목, 요약, 태그 검색" autocomplete="off" /></label>
+    <label for="study-tag">주제<select id="study-tag"><option value="">전체 주제</option>{tags.map(tag => <option value={tag}>{tag}</option>)}</select></label>
+    <p id="study-count" role="status" aria-live="polite">{posts.length}개의 글</p>
+  </div>
+  <PostList posts={posts} />
+  <p id="study-empty" class="notice" hidden>일치하는 글이 없습니다. 검색어나 주제를 바꿔보세요.</p>
+  <noscript><p class="control-hint">JavaScript 없이도 모든 글을 읽을 수 있습니다. 검색과 주제 필터는 JavaScript가 필요합니다.</p></noscript>
+</section>
+<script>
+  const input = document.querySelector<HTMLInputElement>('#study-search')!;
+  const tag = document.querySelector<HTMLSelectElement>('#study-tag')!;
+  const entries = [...document.querySelectorAll<HTMLAnchorElement>('.post-item')];
+  const filter = () => {
+    const query = input.value.trim().toLocaleLowerCase('ko');
+    let visible = 0;
+    entries.forEach(entry => {
+      const tags = entry.querySelector('.post-meta span')!.textContent!.split(' · ');
+      const match = entry.textContent!.toLocaleLowerCase('ko').includes(query) && (!tag.value || tags.includes(tag.value));
+      entry.hidden = !match;
+      if (match) visible++;
+    });
+    document.querySelector('#study-count')!.textContent = visible + '개의 글';
+    (document.querySelector('#study-empty') as HTMLElement).hidden = visible > 0;
+  };
+  input.addEventListener('input', filter);
+  tag.addEventListener('change', filter);
+  document.querySelector<HTMLElement>('#study-controls')!.hidden = false;
+</script>
+</Layout>
