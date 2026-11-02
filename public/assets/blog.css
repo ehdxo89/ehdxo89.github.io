@@ -55,3 +55,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   .article-toc {top:88px;max-height:calc(100vh - 112px);overflow-y:auto}
   .skip {z-index:40}
 }
+
+/* Reading position shares the desktop scope of the compact header. */
+.scroll-progress {display:none}
+@media (min-width:1024px) and (hover:hover) and (pointer:fine) {
+  .scroll-progress {display:block;position:fixed;inset:0 0 auto;height:3px;z-index:35;background:var(--line);pointer-events:none}
+  .scroll-progress span {display:block;width:100%;height:100%;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:none}
+}
