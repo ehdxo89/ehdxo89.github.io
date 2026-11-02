@@ -26,3 +26,8 @@ test('public metadata and RSS',()=>{
  for(const file of html){const text=readFileSync(file,'utf8'); assert.match(text,/<html lang="ko"/);assert.equal((text.match(/<h1[ >]/g)||[]).length,1);assert.match(text,/<meta name="description" content="[^"]+"/);assert.ok(!text.includes('/Users/'));}
  const rss=readFileSync(join(root,'rss.xml'),'utf8');const routes=html.filter(p=>p.includes('/studies/')&&!p.endsWith('/studies/index.html'));assert.equal((rss.match(/<item>/g)||[]).length,routes.length);for(const route of routes) assert.ok(rss.includes('https://ehdxo89.github.io/'+route.slice(root.length).replace(/index\.html$/, '')),route);assert.ok(!rss.includes('writing-template'));
 });
+
+test('monochrome icon and browser theme metadata on every page',()=>{
+ for(const file of html){const text=readFileSync(file,'utf8');assert.match(text,/rel="icon" href="\/assets\/favicon-monochrome\.svg"/);assert.ok(!text.includes('href="/assets/favicon.svg"'));assert.match(text,/name="theme-color" content="#fafafa" media="\(prefers-color-scheme: light\)"/);assert.match(text,/name="theme-color" content="#141414" media="\(prefers-color-scheme: dark\)"/);}
+ const svg=readFileSync(join(root,'assets/favicon-monochrome.svg'),'utf8');const colors=[...svg.matchAll(/#[0-9a-f]{6}/gi)].map(x=>x[0]);assert.ok(colors.length>=2);for(const c of colors)assert.ok(c.slice(1,3)===c.slice(3,5)&&c.slice(3,5)===c.slice(5,7),c);
+});

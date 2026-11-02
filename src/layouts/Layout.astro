@@ -8,6 +8,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 <head>
   <meta charset="utf-8" />
   <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title.replace(/ — DEVLOG$/, '')} — DEVLOG</title>
   <meta name="description" content={description} />
@@ -16,7 +18,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={canonical} />
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/assets/favicon-monochrome.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="/assets/style.css" />
   <link rel="stylesheet" href="/assets/blog.css" />
   <link rel="alternate" type="application/rss+xml" title="DEVLOG 스터디" href="/rss.xml" />
